@@ -14,6 +14,8 @@ GEM
       method_source (~> 0.8)
       slop (~> 3.4)
     rake (10.1.1)
+    rake-compiler (0.9.2)
+      rake
     rspec (2.14.1)
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
@@ -30,6 +32,6 @@ PLATFORMS
 DEPENDENCIES
   briskly!
   bundler (~> 1.4)
-  pry
-  rake (~> 10.0)
+  pry (~> 0)
+  rake-compiler
   rspec (~> 2.4)

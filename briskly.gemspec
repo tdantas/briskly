@@ -12,11 +12,14 @@ Gem::Specification.new do |gem|
   gem.homepage      = 'http://github.com/pedrocunha/briskly'
   gem.license       = 'MIT'
   gem.files         = `git ls-files`.split($\)
+
   gem.require_paths = ['lib']
   gem.version       = Briskly::VERSION
 
   gem.add_development_dependency 'bundler', '~> 1.4'
-  gem.add_development_dependency 'rake', '~> 10.0'
+  gem.add_development_dependency "rake-compiler"
   gem.add_development_dependency 'rspec', '~> 2.4'
   gem.add_development_dependency 'pry', '~> 0'
+
+  gem.extensions << "ext/briskly/extconf.rb"
 end

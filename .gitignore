@@ -1,2 +1,7 @@
 .ruby-version
 *.gem
+*.bundle
+*.o
+Makefile
+**/*.bundle
+tmp/*

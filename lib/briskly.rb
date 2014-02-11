@@ -1,13 +1,13 @@
-require "briskly/version"
+require 'briskly/version' unless defined? Briskly::VERSION
+require 'briskly/briskly'
 
-class Briskly
-  private_class_method :new
-
-  def self.instance
-    @@instance ||= new
-  end
+module Briskly
 
   def self.collection(key: 'default')
     Collection.new(key)
   end
+
 end
+
+puts Briskly::Storage.store('foo', [1, 2]);
+puts Briskly::Storage.get('foo');
