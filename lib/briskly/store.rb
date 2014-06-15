@@ -1,7 +1,6 @@
 require 'briskly'
 require 'briskly/element'
 require 'trie'
-require 'securerandom'
 
 class Briskly::Store
 
