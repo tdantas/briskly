@@ -13,35 +13,27 @@ class Briskly::Store
   end
 
   def with(values)
-    if values.length > 1
-      bulk(values)
-    else
-      individual(values)
-    end
-    self
+    values.length > 1 ? bulk(values) : individual(values)
+    return self
   end
 
   def search(keyword, options = {})
-    keyword   = Briskly::Keyword.new(keyword)
-    children  = @store.children_with_values(keyword.normalised)
-    result    = extract_elements_from_children(children)
+    result    = fetch(keyword)
     limit     = options.fetch(:limit, result.length)
     result.first(limit)
   end
 
   private
 
-   def add(element)
-    keyword = element.keyword(:internal).normalised
-    previous = @store.get(keyword)
-    @store.add(keyword, [element])
+  def add(element)
+    @store.add(element.keyword(:internal).normalised, [element])
   end
 
   def append(element)
-    key = element.keyword(:internal).normalised
-    previous = @store.get(key) || []
+    keyword = element.keyword(:internal).normalised
+    previous = @store.get(keyword) || []
     previous.push([element])
-    @store.add(key, previous)
+    @store.add(keyword, previous)
   end
 
   def bulk(items)
@@ -57,7 +49,7 @@ class Briskly::Store
     end
   end
 
-  def extract_elements_from_children(children)
+  def extract_elements(children)
     children
       .map(&:last)
       .flatten
@@ -65,10 +57,15 @@ class Briskly::Store
       .uniq { |el| el.created_at}
   end
 
+  def fetch(keyword)
+    keyword   = Briskly::Keyword.new(keyword)
+    children  = @store.children_with_values(keyword.normalised)
+    extract_elements(children)
+  end
+
   def individual(item)
     item.each do |term|
-      keywords = Array(term[:keyword])
-      if keywords.length > 1
+      if Array(term[:keyword]).length > 1
         related(term[:keyword], term[:data])
       else
         add(Briskly::Element.new(term[:keyword], term[:data]))
@@ -84,4 +81,3 @@ class Briskly::Store
   end
 
 end
-
