@@ -7,6 +7,8 @@ class Briskly::Element
   attr_reader :keyword
   attr_reader :created_at
 
+  attr_accessor :group
+
   def initialize(keyword, data = nil, created_at = Time.now.to_f)
     raise ArgumentError unless keyword
 
@@ -17,6 +19,10 @@ class Briskly::Element
 
   def keyword(internal = nil)
     internal == :internal ? @keyword : @keyword.to_s
+  end
+
+  def term
+    @keyword.normalised
   end
 
 end
