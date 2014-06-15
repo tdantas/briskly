@@ -5,10 +5,11 @@ describe Briskly::Element do
 
   context 'one keyword' do
 
-    subject { described_class.new('foo', { a: 2 }) }
+    let(:now) { Time.now.to_f }
+    subject { described_class.new('foo', { a: 2 }, now) }
 
     describe '#new' do
-      it 'accepts a keyword and data' do
+      it 'accepts a keyword, data and created_at ' do
         expect(subject).to be_a described_class
       end
 
@@ -22,6 +23,10 @@ describe Briskly::Element do
 
       it 'allows access to its data' do
         expect(subject.data).to eql(a: 2)
+      end
+
+      it 'allows access to its creation date' do
+        expect(subject.created_at).to eql(now)
       end
     end
 
